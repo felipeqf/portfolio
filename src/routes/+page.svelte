@@ -4,6 +4,7 @@
     import DisplaySections from '$lib/components/DisplaySections.svelte';
     import Navbar from '$lib/components/NavBar.svelte';
     import Contact from '$lib/components/Contact.svelte';
+    import { base } from '$app/paths';
     // We will NOT import ChatBot here directly anymore for rendering
     // import ChatBot from '$lib/components/chatBot/ChatBot.svelte';
 
@@ -14,6 +15,7 @@
 
     // State for controlling the iframe visibility
     let showChatbotWidget = false;
+    const chatbotSrc = `${base}/chatbot`;
     let chatbotIframeElement: HTMLIFrameElement; // To bind to the iframe element if needed
 
     function toggleChatbotWidget() {
@@ -64,7 +66,7 @@
     <div class="chatbot-widget-container">
         <iframe
             bind:this={chatbotIframeElement}
-            src="/chatBot" 
+            src={chatbotSrc}
             title="Chatbot Assistant"
             class="chatbot-iframe"
             allow="clipboard-write" 
