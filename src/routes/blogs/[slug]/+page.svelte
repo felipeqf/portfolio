@@ -40,5 +40,5 @@
 </div>
 
 <style>
-    @import '../../../styles/slug-styles.css';
+    @import '/src/styles/slug-styles.css';
 </style>

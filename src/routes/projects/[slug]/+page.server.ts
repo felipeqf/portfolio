@@ -12,12 +12,9 @@ import { sortByOrderAndDate } from '$lib/utils/sort';
 
 export const prerender = true;
 
-// --- START: Pre-process image paths ---
+
 // Glob all images in the target directory.
-// `eager: true` makes it a synchronous import during build.
-// `query: '?url'` tells Vite to import the URL of the asset.
-// `import: 'default'` gets the default export, which is the URL string.
-const imageModules = import.meta.glob<string>( // <--- CHANGE IS HERE
+const imageModules = import.meta.glob<string>(
     '/src/content/projects/images/**/*.{png,jpg,jpeg,gif,svg}',
     {
         eager: true,
@@ -107,14 +104,14 @@ export const load: PageServerLoad = async ({ params }) => {
                 image(this: any, { href, title, text }: { href: string; title: string | null; text: string }) {
                     let finalSrc = href;
 
-                    // Handle @images alias
-                    if (href && href.startsWith('@images/')) {
-                        const imageName = href.replace('@images/', '');
+                    // Handle @ProjectImages alias
+                    if (href && href.startsWith('@projectImages/')) {
+                        const imageName = href.replace('@projectImages/', '');
                         if (projectImagePublicPaths[imageName]) {
                             finalSrc = projectImagePublicPaths[imageName];
                         } else {
                             // Image not found in our pre-processed map
-                            console.warn(`[Marked Renderer] Image "${imageName}" from "@images/" not found in pre-processed paths. Falling back to original href: ${href}`);
+                            console.warn(`[Marked Renderer] Image "${imageName}" from "@projectImages/" not found in pre-processed paths. Falling back to original href: ${href}`);
                         }
                     }
                     // Handle relative paths

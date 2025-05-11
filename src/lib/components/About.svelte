@@ -220,10 +220,12 @@
     .profile-image {
       width: 80%;  
     }
+    .links-container{
+      margin-top: 20px;
+    }
 
     .tag { 
       font-size: 14px;
-      margin-top: 20px;
     }
 
     .expertise-tags {

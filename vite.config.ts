@@ -5,7 +5,8 @@ export default defineConfig({
     plugins: [sveltekit()],
     resolve: {
         alias: {
-            '@images': 'src/content/projects/images'
+            '@projectImages': 'src/content/projects/images',
+            '@blogImages': 'src/content/blog_posts/images'
         }
     },
 

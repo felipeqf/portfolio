@@ -105,7 +105,7 @@
     }
 
     .contact-card {
-        background: linear-gradient(145deg, var(--card-gradient-start), var(--card-gradient-end));
+        background: var(--card-background);
         padding: 30px;
         border-radius: 20px;
         box-shadow:
@@ -149,7 +149,7 @@
         margin: 20px 0;
         padding: 12px;
         border-radius: 12px;
-        background: var(--contact-item-background, rgba(255, 255, 255, 0.7));
+        background: var(--contact-item-background);
         transition: all 0.2s ease;
     }
 

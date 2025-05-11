@@ -88,7 +88,8 @@ def main(a: str,b:str)-> str
     c = a + b
     return c
 ```
-![Alt text](@images/v1.jpg)
+![Alt text](@projectImages/project.jpg)
+
 ## Live Demo
 [Visit the Website](https://yourportfolio.com)
 

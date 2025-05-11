@@ -1,7 +1,7 @@
 ---
 title: Personal Portfolio Website
 date: 2024/03/28
-link: https://github.com/yourusername/portfolio
+link: https://github.com/felipeqf
 tags: SvelteKit, TypeScript, TailwindCSS, Python, Javascript, HTML
 description: Template for quick and easy portfolio
 skip: True
