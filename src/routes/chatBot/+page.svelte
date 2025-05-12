@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Chatbot from '$lib/components/chatBot/ChatBot.svelte';
+    import Chatbot from '$lib/components/chatbot/ChatBot.svelte';
     import { onMount } from 'svelte';
 
     onMount(() => {
@@ -13,7 +13,7 @@
         });
 
         // Optional: Send a message to the parent when the iframe content is ready
-        window.parent.postMessage({ type: 'CHAT_IFRAME_READY', height: document.body.scrollHeight }, 'https://felipeqf.github.io/portfolio');
+        window.parent.postMessage({ type: 'CHAT_IFRAME_READY', height: document.body.scrollHeight }, 'https://felipeqf.github.io');
         // For production, replace '*' with the specific origin of the parent page:
         // window.parent.postMessage({ type: 'CHAT_IFRAME_READY' }, 'https://your-parent-page.com');
     });

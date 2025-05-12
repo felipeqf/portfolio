@@ -47,7 +47,6 @@
     <About {portfolioData} />
     <DisplaySections {portfolioData} {content} />
     <Contact {portfolioData} />
-    <!-- ChatBot component is no longer directly rendered here -->
 </div>
 
 <!-- Chatbot Launcher Button -->
