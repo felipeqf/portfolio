@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PortfolioData } from '../types/types.js';
+  import { marked } from 'marked';
 
   export let portfolioData: PortfolioData;
 
@@ -32,9 +33,9 @@
           </div>
         </div>
           <h2>{portfolioData.name}</h2>
-          <p>
-              {portfolioData.bio}
-          </p>
+          <div class="markdown-content">
+            {@html marked.parse(portfolioData.bio)}
+          </div>
           <div class="expertise-tags">
               {#each portfolioData.expertises as expertise}
                   <span class="expertise-tag">{expertise}</span>
@@ -110,17 +111,18 @@
     background-clip: text;  
     -webkit-background-clip: text;  
     -webkit-text-fill-color: transparent;  
-    margin: 20px 0;  
-    line-height: 1.2;  
+    margin: 20px 0; 
   }
 
-  .left-content p {
-    font-size: 1.6rem;  
+  .markdown-content {
+    margin: 0;
     color: var(--text-secondary-color); 
-    margin: 25px 0;  
-    line-height: 1.6;  
-    transition: color 0.3s ease;
-  }
+    font-size: 1.2rem;
+    margin-top: 14px;
+    font-family: var(--font-system);
+    line-height: 1.6;
+    text-align: justify;
+}
 
   .tag {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); 

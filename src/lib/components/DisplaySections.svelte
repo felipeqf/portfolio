@@ -2,6 +2,7 @@
   import type { PortfolioData, PageData } from '../types/types.js';
   import SkillsSection from '$lib/components/sections/Skills/SkillsSection.svelte';
   import TimelineSection from '$lib/components/sections/Timeline/TimelineSection.svelte';
+  import ExtraSection from './sections/Timeline/ExtraSection.svelte';
   import SlugSection from '$lib/components/sections/Slug/SlugSection.svelte';
 
   export let portfolioData: PortfolioData;
@@ -9,7 +10,7 @@
 </script>
 
 
-<TimelineSection 
+<ExtraSection 
   sectionId="experience"
   sectionTitle="Experience"
   items={portfolioData.experience}
@@ -32,7 +33,7 @@
   items={portfolioData.certifications}
 />
 
-<TimelineSection 
+<ExtraSection 
   sectionId="education"
   sectionTitle="Education"
   items={portfolioData.education}

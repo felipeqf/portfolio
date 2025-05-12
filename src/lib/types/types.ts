@@ -4,6 +4,7 @@ interface Experience {
     date: string;
     title: string;
     company: string;
+    link: string;
     description: string;
     icon?: string;
 }
@@ -18,6 +19,8 @@ interface Education {
     date: string;
     title: string;
     school: string;
+    link: string;
+    description: string;
     icon?: string;
 }
 

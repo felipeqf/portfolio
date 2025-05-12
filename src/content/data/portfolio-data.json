@@ -1,6 +1,6 @@
 {
     "basePath": "/portfolio",
-    "theme": "light",
+    "theme": "ocean",
     "name": "John Doe",
     "title": "Senior Data Scientist",
     "image": "images/Portrait_Placeholder.png",
@@ -23,6 +23,7 @@
             "title": "Senior Data Scientist",
             "date": "2020 - Present",
             "company": "Google",
+            "link": "https://www.google.com",
             "description": "Led a team of data scientists to develop machine learning models for improving search engine algorithms, focusing on natural language understanding and user behavior analysis.",
             "icon": "icons/google-icon.svg"
         },
@@ -47,12 +48,16 @@
             "title": "PhD in Data Science",
             "date": "2014 - 2018",
             "school": "University of California, Berkeley",
+            "link": "https://www.berkeley.edu",
+            "description": "Conducted research on machine learning algorithms for large-scale data analysis, focusing on deep learning and natural language processing.",
             "icon": ""
         },
         {
             "date": "2014 - 2018",
             "title": "MSc in Statistics",
             "school": "Stanford University",
+            "link": "https://www.wikipedia.com",
+            "description": "Conducted research on machine learning algorithms for large-scale data analysis, focusing on deep learning and natural language processing.",
             "icon": ""
             
         },
@@ -60,6 +65,8 @@
             "title": "BSc in Computer Science",
             "date": "2012-2014",
             "school": "Massachusetts Institute of Technology",
+            "link": "https://www.education.edu",
+            "description": "for large-scale data analysis, focusing on deep learning and natural language processing.",
             "icon": ""
             
         }

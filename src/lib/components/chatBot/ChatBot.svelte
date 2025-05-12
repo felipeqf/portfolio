@@ -1,22 +1,26 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import type { PortfolioData } from '$lib/types/types.js';
+
+  	export let portfolioData: PortfolioData;
 
 	interface Message {
-		id: string; // Unique ID for Svelte's keyed each block
+		id: string;
 		role: 'user' | 'assistant';
 		content: string;
 	}
 
 	let messageHistory: Message[] = [];
 	let userInput: string = '';
-	let messagesContainer: HTMLDivElement; // To bind to the messages div for scrolling
-	let isLoading: boolean = false; // To disable input/button while waiting for response
+	let messagesContainer: HTMLDivElement;
+	let isLoading: boolean = false;
 
-	// Helper to generate unique IDs
+	const LOCAL_STORAGE_KEY = 'chatHistory';
+
 	const generateId = (): string => '_' + Math.random().toString(36).substring(2, 9);
 
 	async function scrollToBottom(): Promise<void> {
-		await tick(); // Wait for DOM to update
+		await tick();
 		if (messagesContainer) {
 			messagesContainer.scrollTop = messagesContainer.scrollHeight;
 		}
@@ -33,33 +37,30 @@
 
 		if (messageText && !isLoading) {
 			isLoading = true;
-			// Add user message to UI
 			const userMessage: Message = { id: generateId(), role: 'user', content: messageText };
 			messageHistory = [...messageHistory, userMessage];
-			userInput = ''; // Clear input
+			userInput = '';
 			await scrollToBottom();
 
-			// Prepare history for the API
 			const apiHistory = messageHistory.map(({ role, content }) => ({ role, content }));
 
-			// Add a placeholder for the assistant's message
 			const assistantMessageId = generateId();
 			let assistantMessageContent = '';
 			messageHistory = [
 				...messageHistory,
-				{ id: assistantMessageId, role: 'assistant', content: '...' } // Placeholder
+				{ id: assistantMessageId, role: 'assistant', content: '...' }
 			];
 			await scrollToBottom();
 
 			try {
-				const response = await fetch('https://chatbot-api-351069756806.us-central1.run.app/ask', { // Updated URL to match FastAPI server
+				const response = await fetch('https://chatbot-api-351069756806.us-central1.run.app/ask', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						'Accept': 'text/plain' // Added to match FastAPI response type
+						'Accept': 'text/plain'
 					},
 					body: JSON.stringify({
-						messages: apiHistory.map(msg => ({
+						messages: apiHistory.map(msg => ({ // This inner map is redundant if apiHistory is already correct
 							role: msg.role,
 							content: msg.content
 						}))
@@ -69,7 +70,6 @@
 				if (!response.ok) {
 					throw new Error(`API Error: ${response.status} ${response.statusText}`);
 				}
-
 				if (!response.body) {
 					throw new Error('Response body is null');
 				}
@@ -77,7 +77,6 @@
 				const reader = response.body.getReader();
 				const decoder = new TextDecoder();
 
-				// Update the placeholder message with streamed content
 				const updateAssistantMessage = (newContent: string) => {
 					messageHistory = messageHistory.map((msg) =>
 						msg.id === assistantMessageId ? { ...msg, content: newContent } : msg
@@ -94,16 +93,14 @@
 						await scrollToBottom();
 					}
 				} finally {
-					reader.releaseLock(); // Make sure to release the reader
+					reader.releaseLock();
 				}
-
-				// Final decode for any remaining bytes
 				assistantMessageContent += decoder.decode();
 				updateAssistantMessage(assistantMessageContent);
+
 			} catch (error) {
 				console.error('Error:', error);
 				const errorMessage = error instanceof Error ? error.message : 'Sorry, there was an error.';
-				// Update the placeholder with an error message or add a new error message
 				messageHistory = messageHistory.map((msg) =>
 					msg.id === assistantMessageId ? { ...msg, content: `Error: ${errorMessage}` } : msg
 				);
@@ -118,29 +115,49 @@
 		messageHistory = [];
 		userInput = '';
 		isLoading = false;
+		// Explicitly remove from localStorage on reset
+		if (typeof window !== 'undefined') {
+			localStorage.removeItem(LOCAL_STORAGE_KEY);
+		}
 	}
 
-	// Example: Load initial messages if needed, or set up something on component mount
 	onMount(() => {
-		// You could load previous chat history from localStorage here, for example
-		// messageHistory = [{ id: generateId(), role: 'assistant', content: 'Hello! How can I help you today?' }];
+		if (typeof window !== 'undefined') {
+			const storedHistory = localStorage.getItem(LOCAL_STORAGE_KEY);
+			if (storedHistory) {
+				try {
+					const parsedHistory: Message[] = JSON.parse(storedHistory);
+					if (Array.isArray(parsedHistory)) {
+						messageHistory = parsedHistory;
+					} else {
+						console.warn("Stored chat history is not an array, clearing invalid data.");
+						localStorage.removeItem(LOCAL_STORAGE_KEY);
+					}
+				} catch (e) {
+					console.error('Error parsing chat history from localStorage, clearing corrupted data:', e);
+					localStorage.removeItem(LOCAL_STORAGE_KEY);
+				}
+			}
+		}
+		scrollToBottom();
 	});
+
+	// Reactive statement: Save to localStorage whenever messageHistory changes
+	$: {
+		if (typeof window !== 'undefined' && messageHistory && messageHistory.length > 0) {
+			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messageHistory));
+		}
+	}
 </script>
 
 <div class="chat-container">
-	<h1>Chat Bot AI</h1>
+	<h1>{portfolioData.name}'s Agent</h1>
 	<div class="messages" bind:this={messagesContainer}>
 		{#each messageHistory as message (message.id)}
 			<div class="message {message.role}-message">
-				<!-- Use {@html ...} if your content can contain HTML and you trust it,
-             otherwise Svelte escapes it by default, which is safer.
-             For plain text, direct rendering is fine. -->
-				{message.content}
+				{@html message.content.replace(/\n/g, '<br>')}
 			</div>
 		{/each}
-		{#if isLoading && messageHistory.length > 0 && messageHistory[messageHistory.length -1].role === 'assistant' && messageHistory[messageHistory.length -1].content === '...'}
-			<!-- This is a simple loading indicator, you can make it more sophisticated -->
-		{/if}
 	</div>
 	<div class="input-container">
 		<input
@@ -153,76 +170,149 @@
 		<button on:click={sendMessage} disabled={isLoading}>
 			{#if isLoading}Sending...{:else}Send{/if}
 		</button>
-		<button class="reset-btn" on:click={resetHistory} disabled={isLoading}>Reset History</button>
+		<button class="reset-btn" on:click={resetHistory} disabled={isLoading}>Reset</button>
 	</div>
 </div>
 
 <style>
-	/* Styles are scoped to this component by Svelte */
 	.chat-container {
-		font-family: Arial, sans-serif;
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 20px;
-		background-color: #f9f9f9; /* Slightly different from body for contrast if used on a page */
-		border-radius: 10px;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-		margin-bottom: 20px;
+		height: 100vh;
+		width: 100vw;
+		overflow: hidden;
+		box-sizing: border-box;
+		font-family: var(--font-primary, var(--font-system, Arial, sans-serif));
+		
+		display: flex;
+		flex-direction: column;
+		
+		padding: 20px; 
+		background-color: var(--card-background);
+		color: var(--text-color);
+		margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
 	}
+
+	.chat-container h1 {
+		color: var(--primary-color);
+		text-align: center;
+		margin-top: 0;
+		margin-bottom: 1rem;
+		font-size: 1.8rem;
+        font-family: var(--font-secondary, var(--font-system, Arial, sans-serif));
+        transition: color 0.3s ease;
+	}
+
 	.messages {
-		height: 400px;
+		flex-grow: 1;
 		overflow-y: auto;
-		margin-bottom: 20px;
-		padding: 10px;
-		border: 1px solid #ddd;
-		border-radius: 5px;
-		background-color: white;
+		margin-bottom: 15px; /* Reduced margin */
+		padding: 15px;
+		border: var(--card-border);
+		border-radius: 8px;
+		background-color: var(--chatbot-messages-background, var(--background-color)); /* Use specific var or fallback */
+        transition: background-color 0.3s ease, border-color 0.3s ease;
 	}
+
 	.message {
-		margin-bottom: 10px;
-		padding: 10px;
-		border-radius: 5px;
-		word-wrap: break-word; /* Ensure long words break */
+		margin-bottom: 12px;
+		padding: 10px 15px; /* Adjusted padding */
+		border-radius: 18px; /* Rounded bubbles */
+		word-wrap: break-word;
+        white-space: pre-wrap; /* Respect newlines in messages */
+		line-height: 1.5;
+		max-width: 80%;
+        transition: background-color 0.3s ease, color 0.3s ease;
 	}
+
 	.user-message {
-		background-color: #e3f2fd;
-		margin-left: 20%;
-		text-align: right;
+		background-color: var(--primary-color);
+		color: var(--chatbot-text-on-primary);
+		margin-left: auto; 
+		text-align: left; 
+		border-bottom-right-radius: 5px; /* "Tail" effect */
 	}
+
 	.assistant-message {
-		background-color: #f0f0f0; /* Slightly different from original for clarity */
-		margin-right: 20%;
+		background-color: var(--hover-background-subtle);
+		color: var(--text-color);
+		margin-right: auto;
+		text-align: left;
+		border-bottom-left-radius: 5px; /* "Tail" effect */
 	}
+
 	.input-container {
 		display: flex;
-		gap: 10px;
+		gap: 8px;
+		margin-top: auto; 
 	}
+
 	input[type='text'] {
 		flex: 1;
-		padding: 10px;
-		border: 1px solid #ddd;
-		border-radius: 5px;
+		padding: 12px 10px;
+		border: var(--card-border);
+		border-radius: 8px;
+		background-color: var(--chatbot-input-background, var(--card-background));
+		color: var(--text-color);
+		font-size: 1rem;
+        font-family: var(--font-primary, var(--font-system, sans-serif));
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 	}
+
+	input[type='text']::placeholder {
+		color: var(--text-secondary-color);
+		opacity: 0.8;
+        transition: color 0.3s ease;
+	}
+
 	button {
-		padding: 10px 20px;
-		background-color: #2196f3;
-		color: white;
+		padding: 10px 10px;
+		background-color: var(--primary-color);
+		color: var(--chatbot-text-on-primary);
 		border: none;
-		border-radius: 5px;
+		border-radius: 8px;
 		cursor: pointer;
-		transition: background-color 0.2s ease;
+		transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+		font-weight: 500;
+        font-family: var(--font-primary, var(--font-system, sans-serif));
+		font-size: 0.95rem;
 	}
+
 	button:hover:not(:disabled) {
-		background-color: #1976d2;
+		background-color: var(--link-hover-color); /* Use theme's link hover color */
 	}
+
 	button:disabled {
-		background-color: #cccccc;
+		background-color: var(--hover-background-color);
+		color: var(--text-secondary-color);
 		cursor: not-allowed;
+		opacity: 0.7;
 	}
+
 	.reset-btn {
-		background-color: #f44336;
+		background-color: var(--destructive-color);
+		color: var(--chatbot-text-on-secondary); /* Assuming light text on destructive buttons */
 	}
+
 	.reset-btn:hover:not(:disabled) {
-		background-color: #d32f2f;
+		background-color: var(--destructive-color-hover);
+	}
+
+	/* Custom Scrollbar Styling */
+	.messages::-webkit-scrollbar {
+		width: 8px;
+	}
+	.messages::-webkit-scrollbar-track {
+		background: transparent; /* Make track transparent to show messages background */
+		border-radius: 10px;
+        margin: 5px 0;
+	}
+	.messages::-webkit-scrollbar-thumb {
+		background-color: var(--text-secondary-color);
+		border-radius: 10px;
+		border: 2px solid var(--chatbot-messages-background, var(--background-color)); /* Creates padding around thumb */
+        transition: background-color 0.3s ease;
+	}
+	.messages::-webkit-scrollbar-thumb:hover {
+		background-color: var(--primary-color);
 	}
 </style>

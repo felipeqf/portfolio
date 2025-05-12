@@ -2,6 +2,7 @@
     import type { PortfolioData, Blog } from '$lib/types/types.ts'; 
     import Navbar from '$lib/components/NavBar.svelte';
     import portfolioData from '../../../content/data/portfolio-data.json';
+    import ChatBotWidget from '$lib/components/chatbot/ChatBotWidget.svelte';
     import { base } from '$app/paths';
     
     export let data: Blog;
@@ -38,6 +39,8 @@
         {/if}
     </article>
 </div>
+
+<ChatBotWidget />
 
 <style>
     @import '/src/styles/slug-styles.css';

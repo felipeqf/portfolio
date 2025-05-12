@@ -2,8 +2,10 @@
     import type { PortfolioData, Project } from '$lib/types/types.ts';
     import Navbar from '$lib/components/NavBar.svelte';
     import portfolioData from '../../../content/data/portfolio-data.json';
+    import ChatBotWidget from '$lib/components/chatbot/ChatBotWidget.svelte';
     import { base } from '$app/paths';
     import 'highlight.js/styles/atom-one-dark.css';
+
     export let data: Project;
     const typedPortfolioData = portfolioData as PortfolioData;
 </script>
@@ -38,6 +40,8 @@
         {/if}
     </article>
 </div>
+
+<ChatBotWidget />
 
 <style>
     @import '/src/styles/slug-styles.css';
