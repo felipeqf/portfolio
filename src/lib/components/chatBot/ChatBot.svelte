@@ -128,7 +128,7 @@
 </script>
 
 <div class="chat-container">
-	<h1>Chat Interface</h1>
+	<h1>Chat</h1>
 	<div class="messages" bind:this={messagesContainer}>
 		{#each messageHistory as message (message.id)}
 			<div class="message {message.role}-message">

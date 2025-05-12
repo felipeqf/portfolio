@@ -15,7 +15,7 @@
 
     // State for controlling the iframe visibility
     let showChatbotWidget = false;
-    const chatbotSrc = `${base}/chatbot.html`;
+    const chatbotSrc = `chatbot.html`;
     let chatbotIframeElement: HTMLIFrameElement;
 
     function toggleChatbotWidget() {
