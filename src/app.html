@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" %sveltekit.theme%>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		%sveltekit.head%
+
+		<script>
+			(function() {
+				// Theme detection logic
+				function getBaseTheme(themeName) {
+					if (themeName && themeName.endsWith('-dark')) {
+						return themeName.slice(0, -5);
+					}
+					return themeName || 'light';
+				}
+				
+				function isDarkTheme(themeName) {
+					return themeName === 'dark' || (themeName && themeName.endsWith('-dark'));
+				}
+				
+				function applyDarkVariant(baseTheme, shouldBeDark) {
+					if (baseTheme === 'light') {
+						return shouldBeDark ? 'dark' : 'light';
+					}
+					return shouldBeDark ? `${baseTheme}-dark` : baseTheme;
+				}
+				
+				function initializeTheme(portfolioTheme) {
+					const savedTheme = localStorage.getItem('user-theme-preference');
+					const savedBaseTheme = localStorage.getItem('portfolio-base-theme');
+					
+					const currentBaseTheme = getBaseTheme(portfolioTheme);
+					
+					if (savedTheme && savedBaseTheme) {
+						if (savedBaseTheme !== currentBaseTheme) {
+							const wasDark = isDarkTheme(savedTheme);
+							const newTheme = applyDarkVariant(currentBaseTheme, wasDark);
+							
+							localStorage.setItem('portfolio-base-theme', currentBaseTheme);
+							localStorage.setItem('user-theme-preference', newTheme);
+							
+							return newTheme;
+						} else {
+							return savedTheme;
+						}
+					} else {
+						localStorage.setItem('portfolio-base-theme', currentBaseTheme);
+						localStorage.setItem('user-theme-preference', portfolioTheme);
+						return portfolioTheme;
+					}
+				}
+				
+				// Get portfolio theme from meta tag (we'll set this server-side)
+				const portfolioThemeMeta = document.querySelector('meta[name="portfolio-theme"]');
+				const portfolioTheme = portfolioThemeMeta ? portfolioThemeMeta.content : 'light';
+				
+				// Initialize and apply theme immediately
+				const theme = initializeTheme(portfolioTheme);
+				
+				// Apply theme classes to prevent flash
+				if (document.documentElement) {
+					document.documentElement.classList.add(`theme-${theme}`);
+				}
+				
+				// Apply to body when it becomes available
+				if (document.body) {
+					document.body.classList.add(`theme-${theme}`);
+				} else {
+					// If body doesn't exist yet, wait for it
+					document.addEventListener('DOMContentLoaded', function() {
+						if (document.body) {
+							document.body.classList.add(`theme-${theme}`);
+						}
+					});
+				}
+			})();
+		</script>
+	</head>
+	<body data-sveltekit-preload-data="hover" class="theme-loading">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

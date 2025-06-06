@@ -1,0 +1,206 @@
+{
+    "sections": [
+        {
+            "path": "src/content/projects/",
+            "title": "Projects",
+            "type": "cards_outside"
+        },
+        {
+            "path": "src/content/blogs/",
+            "title": "Blogs",
+            "type": "cards_outside"
+        },
+        {
+            "path": "src/content/blog_posts/",
+            "title": "Blog Posts",
+            "type": "cards_outside"
+        },
+        {
+            "content": [
+                {
+                    "date": "2020",
+                    "icon": "",
+                    "link": "",
+                    "school": "Coursera",
+                    "title": "Python for everybody"
+                },
+                {
+                    "date": "2019",
+                    "icon": "",
+                    "link": "",
+                    "school": "University of Michigan",
+                    "title": "Devops specialist"
+                }
+            ],
+            "title": "Certifications",
+            "type": "cards"
+        },
+        {
+            "content": [
+                {
+                    "date": "2014 - 2018",
+                    "description": "Conducted research on machine learning algorithms for large-scale data analysis, focusing on deep learning and natural language processing.",
+                    "icon": "",
+                    "link": "https://www.berkeley.edu",
+                    "school": "University of California, Berkeley",
+                    "title": "PhD in Data Science"
+                },
+                {
+                    "date": "2014 - 2018",
+                    "description": "Conducted research on machine learning algorithms for large-scale data analysis, focusing on deep learning and natural language processing.",
+                    "icon": "",
+                    "link": "https://www.wikipedia.com",
+                    "school": "Stanford University",
+                    "title": "MSc in Statistics"
+                },
+                {
+                    "date": "2012-2014",
+                    "description": "# TITLE\n Markdown test",
+                    "icon": "",
+                    "link": "https://www.education.edu",
+                    "school": "Massachusetts Institute of Technology",
+                    "title": "BSc in Computer Science"
+                }
+            ],
+            "title": "Education",
+            "type": "cards_with_link"
+        },
+        {
+            "content": [
+                {
+                    "company": "Google",
+                    "date": "2020 - Present",
+                    "description": "# TITLE\n Led a team of data scientists to develop machine  sfsd fsd sf sdfs dfsd fsdf sdf sdfds fsdf sfearning models for improving search engine algorithms, focusing on natural language understanding and user behavior analysis.",
+                    "icon": "icons/google-icon.svg",
+                    "link": "https://www.google.com",
+                    "title": "Senior Data Scientist"
+                },
+                {
+                    "company": "Amazon",
+                    "date": "2016 - 2018",
+                    "description": "Built recommendation systems for e-commerce platforms, increasing user engagement by 15% through personalized product suggestions.",
+                    "icon": "icons/amazon-icon.svg",
+                    "link": "https://www.amazon.com",
+                    "title": "Data Scientist"
+                },
+                {
+                    "company": "IBM",
+                    "date": "2016 - 2018",
+                    "description": "Developed predictive models for supply chain optimization, reducing operational costs by 10% through data-driven insights.",
+                    "icon": "icons/ibm-icon.svg",
+                    "link": "https://www.ibm.com",
+                    "title": "Junior Data Scientist"
+                }
+            ],
+            "title": "Experience",
+            "type": "cards_with_link"
+        },
+        {
+            "content": [
+                {
+                    "date": "2020",
+                    "icon": "",
+                    "link": "https://example.com/neural-networks-nlp",
+                    "publication": "Journal of Machine Learning Research",
+                    "title": "Optimizing Neural Networks for Natural Language Processing: A Case Study"
+                },
+                {
+                    "date": "2019",
+                    "icon": "",
+                    "link": "https://example.com/healthcare-predictive-modeling",
+                    "publication": "Data Science Quarterly",
+                    "title": "Predictive Modeling for Healthcare Outcomes Using Ensemble Methods"
+                }
+            ],
+            "title": "Publications",
+            "type": "cards"
+        },
+        {
+            "content": [
+                {
+                    "icon": "icons/programming-icon.svg",
+                    "name": "Programming Languages",
+                    "skills": [
+                        "Python",
+                        "R",
+                        "SQL",
+                        "JavaScript",
+                        "C#"
+                    ]
+                },
+                {
+                    "icon": "icons/ml-icon.svg",
+                    "name": "Machine Learning",
+                    "skills": [
+                        "Supervised Learning",
+                        "Unsupervised Learning",
+                        "Deep Learning",
+                        "Reinforcement Learning"
+                    ]
+                },
+                {
+                    "icon": "icons/tools-icon.svg",
+                    "name": "Data Tools",
+                    "skills": [
+                        "Pandas",
+                        "NumPy",
+                        "TensorFlow",
+                        "Scikit-Learn",
+                        "PyTorch"
+                    ]
+                },
+                {
+                    "icon": "icons/database-icon.svg",
+                    "name": "Databases",
+                    "skills": [
+                        "MySQL",
+                        "PostgreSQL",
+                        "MongoDB",
+                        "SQLite"
+                    ]
+                }
+            ],
+            "title": "Skills",
+            "type": "cards_with_icons"
+        }
+    ],
+    "settings": {
+        "basePath": "/portfolio",
+        "bio": "Experienced data scientist with a passion for uncovering insights from complex datasets. Skilled in machine learning, natural language processing, and statistical analysis, I specialize in building predictive models to solve real-world problems.",
+        "expertises": [
+            "LLMs",
+            "Python",
+            "Machine Learning",
+            "Data Visualization",
+            "Big Data",
+            "MLOps"
+        ],
+        "name": "Juan Felipe Quintero",
+        "potrait_image": "images/Portrait_Placeholder.png",
+        "theme": "ocean",
+        "title": "Senior Data Scientist",
+        "cards_before_pagination": 3
+    },
+    "social": [
+            {
+                "icon": "icons/email-icon.svg",
+                "link": "youremail@gmail.com",
+                "name": "Email"
+            },
+            {
+                "icon": "icons/github-icon.svg",
+                "link": "https://github.com/username",
+                "name": "Github"
+            },
+            {
+                "icon": "icons/linkedin-icon.svg",
+                "link": "https://linkedin.com/in/username",
+                "name": "linkedin"
+            },
+            {
+                "icon": "icons/cv-icon.svg",
+                "link": "CV.pdf",
+                "name": "cv"
+            }
+        ]
+}

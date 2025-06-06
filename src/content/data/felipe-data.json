@@ -1,0 +1,134 @@
+{
+    "sections": [
+        {
+            "path": "src/content/projects/",
+            "title": "Projects",
+            "type": "cards_outside"
+        },
+        {
+            "content": [
+                {
+                    "company": "Google",
+                    "date": "2020 - Present",
+                    "description": "# TITLE\n Led a team of data scientists to develop machine  sfsd fsd sf sdfs dfsd fsdf sdf sdfds fsdf sfearning models for improving search engine algorithms, focusing on natural language understanding and user behavior analysis.",
+                    "icon": "icons/google-icon.svg",
+                    "link": "https://www.google.com",
+                    "title": "Senior Data Scientist"
+                },
+                {
+                    "company": "Amazon",
+                    "date": "2016 - 2018",
+                    "description": "Built recommendation systems for e-commerce platforms, increasing user engagement by 15% through personalized product suggestions.",
+                    "icon": "icons/amazon-icon.svg",
+                    "link": "https://www.amazon.com",
+                    "title": "Data Scientist"
+                }
+            ],
+            "title": "Experience",
+            "type": "cards"
+        },
+        {
+            "content": [
+                {
+                    "icon": "icons/programming-icon.svg",
+                    "name": "Programming Languages",
+                    "skills": [
+                        "Python",
+                        "JavaScript",
+                        "HTML",
+                        "CSS"
+                    ]
+                },
+                {
+                    "icon": "icons/ml-icon.svg",
+                    "name": "Frameworks",
+                    "skills": [
+                        "React",
+                        "Svelte",
+                        "Django",
+                        "Flask"
+                    ]
+                },
+                {
+                    "icon": "icons/tools-icon.svg",
+                    "name": "Tools",
+                    "skills": [
+                        "Docker",
+                        "Google Cloud",
+                        "Git"
+                    ]
+                },
+                {
+                    "icon": "icons/database-icon.svg",
+                    "name": "Databases",
+                    "skills": [
+                        "Firebase",
+                        "Supabase",
+                        "PostgreSQL",
+                        "MySQL"
+                    ]
+                }
+            ],
+            "title": "Skills",
+            "type": "cards_with_icons"
+        },
+        {
+            "content": [
+                {
+                    "date": "03/31/2020",
+                    "icon": "",
+                    "link": "https://coursera.org/share/3ca873da7e62d88350c67117473de1cd",
+                    "school": "Coursera",
+                    "title": "Python for everybody"
+                },
+                {
+                    "date": "06/01/2023",
+                    "icon": "",
+                    "link": "https://coursera.org/share/8480401a31c5ca6bdb05cbd3af6167d6",
+                    "school": "Coursera",
+                    "title": "Devops specialist"
+                }
+            ],
+            "title": "Certifications",
+            "type": "cards"
+        }
+    ],
+    "settings": {
+        "basePath": "/portfolio",
+        "bio": "Experienced data scientist with a passion for uncovering insights from complex datasets. Skilled in machine learning, natural language processing, and statistical analysis, I specialize in building predictive models to solve real-world problems.",
+        "expertises": [
+            "Python",
+            "Svelte",
+            "React",
+            "LLMs",
+            "Docker"
+        ],
+        "name": "Juan Felipe Quintero",
+        "potrait_image": "images/Portrait_Placeholder.png",
+        "theme": "ocean",
+        "title": "Full Stack Developer",
+        "cards_before_pagination": 3
+    },
+    "social": [
+            {
+                "icon": "icons/email-icon.svg",
+                "link": "felipeq091094@gmail.com",
+                "name": "Email"
+            },
+            {
+                "icon": "icons/github-icon.svg",
+                "link": "https://github.com/username",
+                "name": "Github"
+            },
+            {
+                "icon": "icons/linkedin-icon.svg",
+                "link": "https://linkedin.com/in/username",
+                "name": "linkedin"
+            },
+            {
+                "icon": "icons/cv-icon.svg",
+                "link": "CV.pdf",
+                "name": "cv"
+            }
+        ]
+}
