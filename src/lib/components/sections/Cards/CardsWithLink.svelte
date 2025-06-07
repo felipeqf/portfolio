@@ -1,0 +1,78 @@
+<script lang="ts">
+	export let sectionTitle: string;
+	export let items: any[];
+
+	import { marked } from 'marked';
+	import { fadeIn } from '$lib/utils/fadeIn';
+	import Pagination from '$lib/components/common/Pagination.svelte';
+	import TruncatedMarkdown from '$lib/components/common/TruncatedMarkdown.svelte';
+
+	import '/src/styles/cards.css';
+	import '/src/styles/cards-link.css';
+	export let itemsPerPage: number = 5;
+
+	let currentPage = 1;
+
+	$: totalPages = Math.ceil(items.length / itemsPerPage);
+
+	$: paginatedItems = items.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+	function handlePageChange(newPage: number) {
+		if (newPage >= 1 && newPage <= totalPages) {
+			currentPage = newPage;
+		}
+	}
+</script>
+
+<section id={sectionTitle.toLowerCase()} class="section" use:fadeIn>
+	<h2 class="section-title">{sectionTitle}</h2>
+	{#each paginatedItems as item, index (item.title || index)}
+		<div class="timeline-content">
+			<div class="details">
+				<span class="date">{item.date}</span>
+				{#if item?.icon}
+					<div class="timeline-header">
+						<div class="timeline-icon">
+							<img src={item.icon} alt="" />
+						</div>
+						<div class="timeline-title">
+							<div class="title-wrapper">
+								<a href={item.link} target="_blank" rel="noopener noreferrer" class="hover-link">
+									{#if item.school}
+										<h3 class="entity">{item.school}</h3>
+									{:else if item.company}
+										<h3 class="entity">{item.company}</h3>
+									{/if}
+								</a>
+								<span class="separator">|</span>
+								<h3 class="title">
+									{item.title}
+								</h3>
+							</div>
+						</div>
+					</div>
+				{:else}
+					<div class="timeline-title">
+						<div class="title-wrapper">
+							<a href={item.link} target="_blank" rel="noopener noreferrer" class="hover-link">
+								{#if item.school}
+									<h3 class="entity">{item.school}</h3>
+								{:else if item.company}
+									<h3 class="entity">{item.company}</h3>
+								{/if}
+							</a>
+							<span class="separator">|</span>
+							<h3 class="title">
+								{item.title}
+							</h3>
+						</div>
+					</div>
+				{/if}
+				{#if item.description}
+					<TruncatedMarkdown text={item.description} />
+				{/if}
+			</div>
+		</div>
+	{/each}
+	<Pagination {currentPage} {totalPages} onPageChange={handlePageChange} />
+</section>
