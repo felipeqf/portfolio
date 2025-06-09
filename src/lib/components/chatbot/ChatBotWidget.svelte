@@ -62,7 +62,7 @@
 			await scrollToBottom();
 
 			try {
-				const response = await fetch(import.meta.env.VITE_CHATBOT_URL, {
+				const response = await fetch('https://chatbot-api-351069756806.us-central1.run.app/ask', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -75,6 +75,7 @@
 						}))
 					})
 				});
+				console.log(response);
 
 				if (!response.ok) {
 					throw new Error(`API Error: ${response.status} ${response.statusText}`);
