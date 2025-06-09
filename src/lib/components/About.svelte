@@ -9,7 +9,7 @@
   <div class="intro-content">
       <div class="left-content">
         <div class="links-container">
-          <span class="tag">{portfolioData.settings.title}</span>
+          <span class="title-tag">{portfolioData.settings.title}</span>
           <div class="social-links">
           {#each portfolioData.social as social}
             {#if social.name.toLowerCase() !== 'email'}
@@ -112,7 +112,7 @@
     text-align: justify;
 }
 
-  .tag {
+  .title-tag {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); 
     color: var(--text-on-primary, white); 
     box-shadow: 0 4px 15px var(--shadow-primary-medium, rgba(34, 139, 230, 0.2));
@@ -122,11 +122,6 @@
     font-weight: 500;
     display: inline-block;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease, color 0.3s ease;
-  }
-
-  .tag:hover {
-    transform: translateY(-2px);  
-    box-shadow: 0 6px 20px var(--shadow-primary-medium-hover, rgba(34, 139, 230, 0.3));
   }
 
   .expertise-tags {
@@ -214,7 +209,7 @@
       margin-top: 20px;
     }
 
-    .tag { 
+    .title-tag { 
       font-size: 14px;
     }
 
@@ -237,7 +232,7 @@
     .intro{
       margin-top: 100px;  
     }
-    .tag { 
+    .title-tag { 
       font-size: 12px;  
       position: relative;  
       left: 0;  

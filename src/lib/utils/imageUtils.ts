@@ -29,7 +29,6 @@ function ensureImageCopied(sourceImagePath: string, staticImagePath: string, sta
         if (existsSync(sourceImagePath)) {
             if (!existsSync(staticImagePath)) {
                 copyFileSync(sourceImagePath, staticImagePath);
-                console.log(`Copied image: ${basename(sourceImagePath)} to static folder`);
             }
         }
     } catch (e) {
@@ -47,11 +46,8 @@ function ensureImageCopied(sourceImagePath: string, staticImagePath: string, sta
 export function processImagePath(imagePath: string, contentDir: string, sectionType: string): string {
     if (!imagePath) return '';
     
-    console.log(`Processing image: ${imagePath}, contentDir: ${contentDir}, sectionType: ${sectionType}`);
-    
     // If already absolute (starts with / or http), return as is
     if (imagePath.startsWith('/') || imagePath.startsWith('http')) {
-        console.log(`Image is absolute, returning as-is: ${imagePath}`);
         return imagePath;
     }
     
@@ -61,16 +57,11 @@ export function processImagePath(imagePath: string, contentDir: string, sectionT
             ? imagePath 
             : `images/${imagePath}`;
         
-        console.log(`Image path with folder: ${imagePathWithFolder}`);
         
         // Always ensure image is copied to static folder (for both dev and build)
         const sourceImagePath = join(contentDir, imagePathWithFolder);
         const staticImageDir = join(process.cwd(), 'static', 'content', sectionType);
         const staticImagePath = join(staticImageDir, basename(imagePath));
-        
-        console.log(`Source image path: ${sourceImagePath}`);
-        console.log(`Static image dir: ${staticImageDir}`);
-        console.log(`Static image path: ${staticImagePath}`);
         
         // Ensure the image is copied
         ensureImageCopied(sourceImagePath, staticImagePath, staticImageDir);
@@ -80,7 +71,6 @@ export function processImagePath(imagePath: string, contentDir: string, sectionT
         
         // Return the static URL using just the filename, with basePath if in production
         const finalUrl = `${basePath}/content/${sectionType}/${basename(imagePath)}`;
-        console.log(`Final image URL: ${finalUrl}`);
         
         return finalUrl;
     } catch (e) {

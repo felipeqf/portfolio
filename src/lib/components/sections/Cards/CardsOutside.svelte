@@ -2,15 +2,16 @@
 	export let sectionTitle: string;
 	export let items: any[];
 	export let availableTags: string[] = [];
+	export let truncationLimit: number = 100;
 	import { base } from '$app/paths';
-	import { fadeIn } from '$lib/utils/fadeIn';
+	import { fadeIn } from '$lib/utils/fadeInUtils';
 	import '/src/styles/cards.css';
 	import '/src/styles/slug-cards.css';
 	import SearchableDropdown from '$lib/components/common/TagSearch.svelte';
-	import TruncatedText from '$lib/components/common/TruncatedText.svelte';
+	import TruncatedMarkdown from '$lib/components/common/TruncatedMarkdown.svelte';
 	import Pagination from '$lib/components/common/Pagination.svelte';
 
-	export let itemsPerPage: number = 5;
+	export let itemsPerPage: number = 3;
 	let currentPage = 1;
 	let selectedTags: string[] = [];
 
@@ -94,7 +95,7 @@
 						{#each Array.isArray(item.metadata.tags) ? item.metadata.tags : item.metadata.tags
 									.split(/[\s,]+/)
 									.map((t: string): string => t.trim()) as tag}
-							<span class="tag">{tag}</span>
+							<span class="card-tag">{tag}</span>
 						{/each}
 					</div>
 				{/if}
@@ -125,7 +126,7 @@
 					{/if}
 					{#if item.metadata?.description}
 						<p class="description">
-							<TruncatedText text={item.metadata.description} />
+							<TruncatedMarkdown text={item.metadata.description} limit={truncationLimit} />
 						</p>
 					{/if}
 				</div>

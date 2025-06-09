@@ -4,6 +4,7 @@ date: 2025/04/27
 link: https://github.com/example
 tags: SvelteKit, TypeScript
 image: blog-post.png
+description: This is my first blog post
 ---
 
 # Test Project

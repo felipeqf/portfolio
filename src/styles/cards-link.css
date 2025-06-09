@@ -1,33 +1,3 @@
-.section {
-    margin: auto;
-    min-width: 100%;
-}
-
-.timeline-content {
-    min-height: 200px;
-    min-width: 90%;
-    padding: 24px;
-    margin: 0 20px 40px 20px;
-    background: var(--card-background); 
-    border-radius: 12px;
-    box-shadow: 0 4px 20px var(--card-shadow); 
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Added background transition */
-    border: var(--card-border); 
-}
-
-.timeline-content .details {
-    display: flex;
-    flex-direction: column;
-}
-
-.timeline-content h3 {
-    margin: 12px 0;
-    font-size: 1.8rem;
-    color: var(--primary-color); 
-    font-weight: 600;
-    line-height: 1.4;
-}
-
 .markdown-content {
     margin: 0;
     color: var(--text-secondary-color); 
@@ -37,12 +7,6 @@
     line-height: 1.6;
     text-align: justify;
     margin: 0 20px;
-}
-
-.timeline-header{
-    display: flex;
-    align-items: center;
-    gap: 15px;
 }
 
 .timeline-icon{
@@ -87,6 +51,15 @@
     flex-direction: row;
     gap: 14px;
     align-items: center;
+    margin-bottom: 15px;
+}
+
+.timeline-title.with-icon {
+    margin-bottom: 0; /* No margin when inside timeline-header */
+}
+
+.timeline-title.without-icon {
+    margin-bottom: 15px; /* Keep margin when standalone */
 }
 
 .title-wrapper {

@@ -240,16 +240,21 @@
 
 	.footer-bottom p {
 		color: var(--text-secondary-color);
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 		margin: 0;
 		transition: color 0.3s ease;
+	}
+
+	.footer-bottom a {
+		color: var(--primary-color);
+		text-decoration: none;
 	}
 
 	@media (max-width: 900px) {
 		.footer-content {
 			grid-template-columns: 1fr;
-			gap: 25px;
-			padding: 30px 15px 15px;
+			gap: 10px;
+			padding: 20px 10px 0;
 			text-align: center;
 		}
 
@@ -277,11 +282,6 @@
 	}
 
 	@media (max-width: 600px) {
-		.footer-content {
-			padding: 25px 10px 10px;
-			gap: 20px;
-		}
-
 		.footer-email {
 			padding: 10px 12px;
 			gap: 10px;

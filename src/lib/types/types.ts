@@ -26,6 +26,7 @@ interface Section {
     title: string;
     type: string;
     content?: BaseContentItem[];
+    truncation_limit?: number;
 }
 
 interface Settings {
@@ -52,6 +53,7 @@ export interface PortfolioSection {
     route?: string;
     type: string;
     content?: BaseContentItem[];
+    truncation_limit?: number;
 }
 
 export interface ContentSection {

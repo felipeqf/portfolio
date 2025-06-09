@@ -6,15 +6,6 @@
 		theme.set(newTheme);
 	}
 
-	// Helper function to get display name
-	function getDisplayName(themeName: string): string {
-		if (themeName.endsWith('-dark')) {
-			const baseName = themeName.slice(0, -5);
-			return `${baseName.charAt(0).toUpperCase() + baseName.slice(1)} Dark`;
-		}
-		return themeName.charAt(0).toUpperCase() + themeName.slice(1);
-	}
-
 	// Helper function to determine if current theme is dark
 	$: isDark = $theme === 'dark' || $theme.endsWith('-dark');
 </script>

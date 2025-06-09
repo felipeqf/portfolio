@@ -4,26 +4,10 @@
 	export let text: string;
 	export let className: string = '';
 
-	// Responsive character limits
-	export let mobileLimit: number = 150;
-	export let tabletLimit: number = 300;
-	export let desktopLimit: number = 224;
+	// Character limit - now required to be passed from parent
+	export let limit: number;
 
 	let isExpanded = false;
-	let windowWidth = 0;
-
-	// Reactive character limit based on screen size
-	$: responsiveCharLimit = getResponsiveCharLimit(windowWidth);
-
-	function getResponsiveCharLimit(width: number): number {
-		if (width < 900) {
-			return mobileLimit;
-		} else if (width < 1300) {
-			return tabletLimit;
-		} else {
-			return desktopLimit;
-		}
-	}
 
 	// Strip HTML tags to get plain text content for length calculation
 	function stripHtml(html: string): string {
@@ -33,10 +17,10 @@
 	}
 
 	function shouldTruncate(plainText: string): boolean {
-		return !!(plainText && plainText.length > responsiveCharLimit);
+		return !!(plainText && plainText.length > limit);
 	}
 
-	function truncateHtml(html: string, limit: number): string {
+	function truncateHtml(html: string, charLimit: number): string {
 		const tempDiv = document.createElement('div');
 		tempDiv.innerHTML = html;
 
@@ -48,8 +32,8 @@
 
 			if (node.nodeType === Node.TEXT_NODE) {
 				const textContent = node.textContent || '';
-				if (charCount + textContent.length > limit) {
-					const remainingChars = limit - charCount;
+				if (charCount + textContent.length > charLimit) {
+					const remainingChars = charLimit - charCount;
 					if (remainingChars > 0) {
 						const truncatedText = textContent.substring(0, remainingChars) + '...';
 						node.textContent = truncatedText;
@@ -169,7 +153,7 @@
 					htmlContent = injectButtonIntoHtml(htmlContent, 'Show less');
 				}
 			} else {
-				htmlContent = truncateHtml(fullHtml, responsiveCharLimit);
+				htmlContent = truncateHtml(fullHtml, limit);
 				htmlContent = injectButtonIntoHtml(htmlContent, 'Show more');
 				needsTruncation = true;
 			}
@@ -183,8 +167,6 @@
 	let htmlContent = '';
 	let needsTruncation = false;
 </script>
-
-<svelte:window bind:innerWidth={windowWidth} />
 
 {#if text && text.trim()}
 	<div
@@ -223,11 +205,9 @@
 	}
 
 	.markdown-content :global(p:last-child) {
-		margin-bottom: 0;
-		margin-top: 14px;
+		margin-right: 20px;
 	}
 
-	/* Ensure markdown content displays properly within cards */
 	.markdown-content :global(p) {
 		margin: 0 0 0.5em 0;
 	}

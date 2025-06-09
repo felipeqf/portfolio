@@ -8,10 +8,59 @@
 
 		<script>
 			(function() {
+				// Helper function to get theme storage
+				function getThemeStorage() {
+					try {
+						const stored = localStorage.getItem('theme-data');
+						return stored ? JSON.parse(stored) : null;
+					} catch {
+						return null;
+					}
+				}
+				
+				// Helper function to save theme storage
+				function saveThemeStorage(data) {
+					try {
+						localStorage.setItem('theme-data', JSON.stringify(data));
+					} catch {
+						// Handle localStorage errors gracefully
+					}
+				}
+				
+				// Helper function to migrate old localStorage format
+				function migrateOldStorage() {
+					const oldUserTheme = localStorage.getItem('user-theme-preference');
+					const oldBaseTheme = localStorage.getItem('portfolio-base-theme');
+					const oldJsonTheme = localStorage.getItem('portfolio-json-theme');
+					
+					if (oldUserTheme || oldBaseTheme || oldJsonTheme) {
+						const migrated = {
+							userPreference: oldUserTheme || 'light',
+							portfolioBaseTheme: oldBaseTheme || 'light',
+							portfolioJsonTheme: oldJsonTheme || 'light'
+						};
+						
+						// Save migrated data
+						saveThemeStorage(migrated);
+						
+						// Clean up old keys
+						localStorage.removeItem('user-theme-preference');
+						localStorage.removeItem('portfolio-base-theme');
+						localStorage.removeItem('portfolio-json-theme');
+						
+						return migrated;
+					}
+					
+					return null;
+				}
+				
 				// Theme detection logic
 				function getBaseTheme(themeName) {
 					if (themeName && themeName.endsWith('-dark')) {
-						return themeName.slice(0, -5);
+						return themeName.slice(0, -5) + '-light';
+					}
+					if (themeName === 'dark') {
+						return 'light';
 					}
 					return themeName || 'light';
 				}
@@ -24,30 +73,57 @@
 					if (baseTheme === 'light') {
 						return shouldBeDark ? 'dark' : 'light';
 					}
-					return shouldBeDark ? `${baseTheme}-dark` : baseTheme;
+					if (baseTheme && baseTheme.endsWith('-light')) {
+						const baseName = baseTheme.slice(0, -6); // Remove '-light'
+						return shouldBeDark ? `${baseName}-dark` : baseTheme;
+					}
+					return baseTheme || 'light';
 				}
 				
 				function initializeTheme(portfolioTheme) {
-					const savedTheme = localStorage.getItem('user-theme-preference');
-					const savedBaseTheme = localStorage.getItem('portfolio-base-theme');
+					// Try to get existing storage or migrate from old format
+					let themeStorage = getThemeStorage() || migrateOldStorage();
 					
 					const currentBaseTheme = getBaseTheme(portfolioTheme);
 					
-					if (savedTheme && savedBaseTheme) {
-						if (savedBaseTheme !== currentBaseTheme) {
-							const wasDark = isDarkTheme(savedTheme);
-							const newTheme = applyDarkVariant(currentBaseTheme, wasDark);
-							
-							localStorage.setItem('portfolio-base-theme', currentBaseTheme);
-							localStorage.setItem('user-theme-preference', newTheme);
-							
-							return newTheme;
+					if (themeStorage) {
+						// Check if the JSON theme has changed (different from what we saved)
+						const jsonThemeChanged = themeStorage.portfolioJsonTheme !== portfolioTheme;
+						
+						if (themeStorage.portfolioBaseTheme !== currentBaseTheme || jsonThemeChanged) {
+							if (jsonThemeChanged) {
+								// JSON theme changed - use exact theme from JSON
+								const newStorage = {
+									userPreference: portfolioTheme,
+									portfolioBaseTheme: currentBaseTheme,
+									portfolioJsonTheme: portfolioTheme
+								};
+								saveThemeStorage(newStorage);
+								return portfolioTheme;
+							} else {
+								// Base theme changed - preserve dark/light preference
+								const wasDark = isDarkTheme(themeStorage.userPreference);
+								const newTheme = applyDarkVariant(currentBaseTheme, wasDark);
+								
+								const newStorage = {
+									userPreference: newTheme,
+									portfolioBaseTheme: currentBaseTheme,
+									portfolioJsonTheme: portfolioTheme
+								};
+								saveThemeStorage(newStorage);
+								
+								return newTheme;
+							}
 						} else {
-							return savedTheme;
+							return themeStorage.userPreference;
 						}
 					} else {
-						localStorage.setItem('portfolio-base-theme', currentBaseTheme);
-						localStorage.setItem('user-theme-preference', portfolioTheme);
+						const newStorage = {
+							userPreference: portfolioTheme,
+							portfolioBaseTheme: currentBaseTheme,
+							portfolioJsonTheme: portfolioTheme
+						};
+						saveThemeStorage(newStorage);
 						return portfolioTheme;
 					}
 				}

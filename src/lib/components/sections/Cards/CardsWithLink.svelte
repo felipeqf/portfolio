@@ -1,9 +1,10 @@
 <script lang="ts">
 	export let sectionTitle: string;
 	export let items: any[];
+	export let truncationLimit: number = 100;
 
 	import { marked } from 'marked';
-	import { fadeIn } from '$lib/utils/fadeIn';
+	import { fadeIn } from '$lib/utils/fadeInUtils';
 	import Pagination from '$lib/components/common/Pagination.svelte';
 	import TruncatedMarkdown from '$lib/components/common/TruncatedMarkdown.svelte';
 
@@ -35,13 +36,11 @@
 						<div class="timeline-icon">
 							<img src={item.icon} alt="" />
 						</div>
-						<div class="timeline-title">
+						<div class="timeline-title with-icon">
 							<div class="title-wrapper">
 								<a href={item.link} target="_blank" rel="noopener noreferrer" class="hover-link">
-									{#if item.school}
-										<h3 class="entity">{item.school}</h3>
-									{:else if item.company}
-										<h3 class="entity">{item.company}</h3>
+									{#if item.organization}
+										<h3 class="entity">{item.organization}</h3>
 									{/if}
 								</a>
 								<span class="separator">|</span>
@@ -52,13 +51,11 @@
 						</div>
 					</div>
 				{:else}
-					<div class="timeline-title">
+					<div class="timeline-title without-icon">
 						<div class="title-wrapper">
 							<a href={item.link} target="_blank" rel="noopener noreferrer" class="hover-link">
-								{#if item.school}
-									<h3 class="entity">{item.school}</h3>
-								{:else if item.company}
-									<h3 class="entity">{item.company}</h3>
+								{#if item.organization}
+									<h3 class="entity">{item.organization}</h3>
 								{/if}
 							</a>
 							<span class="separator">|</span>
@@ -69,7 +66,7 @@
 					</div>
 				{/if}
 				{#if item.description}
-					<TruncatedMarkdown text={item.description} />
+					<TruncatedMarkdown text={item.description} limit={truncationLimit} />
 				{/if}
 			</div>
 		</div>

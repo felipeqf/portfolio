@@ -3,7 +3,7 @@ import matter from 'gray-matter';
 import { basename, join } from 'path';
 import { readFileSync, readdirSync } from 'fs';
 import { processImagePath } from './imageUtils';
-import { sortByOrderAndDate } from './sort';
+import { sortByOrderAndDate } from './sortUtils';
 
 export interface MarkdownMetadata {
     title: string;

@@ -1,9 +1,10 @@
 <script lang="ts">
 	export let sectionTitle: string;
 	export let items: any[];
-	export let itemsPerPage: number = 5;
-	
-	import { fadeIn } from '$lib/utils/fadeIn';
+	export let itemsPerPage: number = 3;
+	export let truncationLimit: number = 100;
+
+	import { fadeIn } from '$lib/utils/fadeInUtils';
 	import TruncatedMarkdown from '$lib/components/common/TruncatedMarkdown.svelte';
 	import Pagination from '$lib/components/common/Pagination.svelte';
 	import '/src/styles/cards.css';
@@ -33,20 +34,20 @@
 						<div class="timeline-icon">
 							<img src={item.icon} alt="" />
 						</div>
-						<h3>
+						<h3 class="timeline-title with-icon">
 							{item.title}
 						</h3>
 					</div>
 				{:else}
-					<h3>
+					<h3 class="timeline-title without-icon">
 						{item.title}
 					</h3>
 				{/if}
-				{#each ['school', 'company', 'description', 'publication'] as key}
+				{#each ['organization', 'description', 'publication'] as key}
 					{#if item[key]}
 						<div class="content-item">
 							{#if key === 'description'}
-								<TruncatedMarkdown text={item.description} />
+								<TruncatedMarkdown text={item[key]} limit={truncationLimit} />
 							{:else}
 								<p>{item[key]}</p>
 							{/if}
@@ -55,8 +56,8 @@
 				{/each}
 				{#if item.link}
 					<div class="external-link-wrapper">
-						<a href={item.link} target="_blank" rel="noopener noreferrer" class="hover-link">
-							<p>{item.link}</p>
+						<a class="external-link" href={item.link} target="_blank" rel="noopener noreferrer">
+							{item.link}
 						</a>
 					</div>
 				{/if}
@@ -65,4 +66,3 @@
 	{/each}
 	<Pagination {currentPage} {totalPages} onPageChange={handlePageChange} />
 </section>
-

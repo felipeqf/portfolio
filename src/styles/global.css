@@ -92,7 +92,7 @@
     --hover-background-color: #554d4d;
 }
 
-.theme-forest {
+.theme-forest-light {
     --primary-color: #4CAF50;
     --secondary-color: #2e7d32;
     --background-color: #f1f8e9;
@@ -128,7 +128,7 @@
     --hover-background-subtle: rgba(76, 175, 80, 0.08);
 }
 
-.theme-ocean {
+.theme-ocean-light {
     --primary-color: #2196F3;
     --secondary-color: #0D47A1;
     --background-color: #e3f2fd;
@@ -163,7 +163,7 @@
     --hover-background-subtle: rgba(33, 150, 243, 0.08);
 }
 
-.theme-sunset {
+.theme-sunset-light {
     --primary-color: #D32F2F;
     --secondary-color: #B71C1C;
     --background-color: #ffebee;
@@ -392,14 +392,11 @@ img{
       opacity: 1;
     }
   }
+  
 a {
     text-decoration: none;
-    color: var(--primary-color);
+    color: var(--secondary-color);
     transition: color 0.2s ease;
-}
-
-a:hover {
-    color: var(--link-hover-color);
 }
 
 html {

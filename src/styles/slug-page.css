@@ -131,11 +131,6 @@ time {
     transition: all 0.2s ease;
 }
 
-.tag:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--tag-shadow-hover);
-    background: var(--tag-background-hover);
-}
 
 .next-navigation {
     margin-top: 3rem;
