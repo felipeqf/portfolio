@@ -3,7 +3,7 @@ name: Deploy SvelteKit Site to GitHub Pages
 on:
   # Runs on pushes targeting the default branch (usually 'main' or 'master')
   push:
-    branches: ["main"] # Adjust if your default branch is different
+    branches: ['main'] # Adjust if your default branch is different
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,7 +16,7 @@ permissions:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: '18'
           cache: 'npm'
 
       - name: Install dependencies
@@ -38,6 +38,8 @@ jobs:
 
       - name: Build SvelteKit site
         run: npm run build
+        env:
+          VITE_CHATBOT_URL: ${{ secrets.VITE_CHATBOT_URL }}
 
       # Important: Add .nojekyll file to prevent GitHub Pages from ignoring files starting with _
       - name: Add .nojekyll file
