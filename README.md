@@ -1,7 +1,7 @@
 # Open Portfolio
 
 A fully customizable, modern portfolio website built with **SvelteKit** and **TypeScript**. Create your professional portfolio by simply editing a single JSON configuration file - no coding required!
-![Screenshot](images/actions.jpg)
+![Screenshot](static/images/actions.jpg)
 ## 📚 Table of Contents
 
 - [✨ Features](#-features)
